@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campos de Férias Desportivos</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="fstyle.css">
+  <style>
+    :root {
+      /* Paleta kids desportiva */
+      --verde-relva:#4CAF50;
+      --vermelho-energia:#E53935;
+      --branco:#FFFFFF;
+      --cinza:#f5f5f5;
+      --sombra:rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:'Baloo 2', cursive;
+      background:var(--cinza);
+      color:#333;
+      line-height:1.6;
+    }
+    /* HEADER PRINCIPAL */
+    header{
+      background:var(--verde-relva);
+      color:var(--branco);
+      padding:1rem 2rem;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 4px 12px var(--sombra);
+    }
+    header h1{display:flex;align-items:center;gap:.5rem;font-size:2rem;}
+    header nav ul{display:flex;gap:1.5rem;list-style:none;}
+    header nav a{color:var(--branco);text-decoration:none;font-weight:600;transition:opacity .3s;}
+    header nav a:hover{opacity:.8;}
+
+    /* HERO */
+    .hero {
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 5rem 2rem 7rem;
+}
+
+.hero-bg-video {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: linear-gradient(120deg, rgba(76,175,80,0.55) 0%, rgba(229,57,53,0.55) 100%);
+  box-shadow: 0 0 120px 40px rgba(0,0,0,0.5) inset;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  text-shadow: 0 4px 24px #000a, 0 1px 0 #000;
+}
+
+.hero-content h2 {
+  font-size: 2.7rem;
+  margin-bottom: .5rem;
+}
+.hero-content p {
+  font-size: 1.3rem;
+  max-width: 600px;
+  margin: auto;
+}
+    /* bola animada */
+    .hero::before{
+      content:"";
+      position:absolute;
+      width:120px;height:120px;
+      background:url('https://cdn-icons-png.flaticon.com/512/733/733899.png') no-repeat center/contain;/* football icon */
+      left:5%;top:-60px;
+      animation:bounce 4s infinite ease-in-out;
+      opacity:.8;
+    }
+    @keyframes bounce{
+      0%,100%{transform:translateY(0);}50%{transform:translateY(100px);} }
+
+    .hero h2{font-size:2.7rem;margin-bottom:.5rem;}
+    .hero p{font-size:1.3rem;max-width:600px;margin:auto;}
+
+    /* SECÇÕES GENÉRICAS */
+    .section{max-width:1200px;margin:auto;padding:4rem 2rem;}
+    .section h2{text-align:center;margin-bottom:2rem;}
+
+    /* CARDS */
+    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:2rem;}
+    .card{background:var(--branco);border-radius:20px;box-shadow:0 8px 24px var(--sombra);transition:transform .4s,box-shadow .4s;overflow:hidden;}
+    .card:hover{transform:translateY(-8px);box-shadow:0 12px 28px rgba(0,0,0,.15);}
+    .card img{width:100%;height:170px;object-fit:cover;}
+    .card-content{padding:1.5rem;}
+    .card-content h3{color:var(--verde-relva);font-size:1.6rem;margin-bottom:.5rem;display:flex;align-items:center;gap:.5rem;}
+    .card-content p{margin-bottom:1rem;}
+    .btn{display:inline-block;background:var(--vermelho-energia);color:var(--branco);padding:.6rem 1.4rem;border-radius:8px;text-decoration:none;font-weight:600;transition:background .3s;}
+    .btn:hover{background:#c62828;}
+
+    /* REVEAL */
+    .reveal{opacity:0;transform:translateY(30px);transition:all .8s ease-in-out;}
+    .reveal.active{opacity:1;transform:translateY(0);}
+
+    /* FOOTER */
+    footer{background:var(--verde-relva);color:var(--branco);text-align:center;padding:1rem 0;font-size:.9rem;}
+
+    /* RESPONSIVO */
+    @media(max-width:600px){
+      header h1{font-size:1.5rem;}
+      .hero h2{font-size:1.9rem;}
+      .hero p{font-size:1rem;}
+    }
+  </style>
+</head>
+<body>
+<section class="hero">
+  <video autoplay muted loop playsinline class="hero-bg-video">
+    <source src="criança.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h2>Desporto, Diversão e Espírito de Equipa!</h2>
+    <p>Campos de férias que inspiram os jovens a mover‑se, competir com fair‑play e criar amizades que duram toda a época.</p>
+  </div>
+</section>
+
+<section id="proximos" class="section">
+  <h2 class="reveal" style="color:var(--vermelho-energia);">Próximos Campos</h2>
+  <div class="cards">
+    <div class="card reveal">
+      <img src="https://saopauloparacriancas.com.br/wp-content/uploads/2017/10/corrida-insana-divulgacao-600x400.jpg" alt="Campo dos Pequenos Heróis"/>
+      <div class="card-content">
+        <h3><i class="bi bi-sun-fill"></i> Campo dos pequenos Heróis</h3>
+        <p>Jogos de cooperação, pistas de obstáculos e missões para “salvar o dia” em equipa. Aqui todos são heróis!</p>
+        <a href="campo_herois.html" target="conteudo" class="btn">Detalhes</a>
+      </div>
+    </div>
+    <div class="card reveal">
+      <img src="https://mlgczzplk1pi.i.optimole.com/yEYAA9Y.LpnJ.148bb/w:1100/h:660/q:mauto/f:avif/https://estrelaseouricos.sapo.pt/carregamentos/2023/03/Gravity-com-criancas.jpg" alt="Multi‑Sports Challenge"/>
+      <div class="card-content">
+        <h3><i class="bi bi-lightning-fill"></i> Multi‑Sports Challenge</h3>
+        <p>Uma maratona de modalidades: atletismo, canoagem, escalada, piscina, etc — tudo num ambiente seguro e cheio de energia, onde cada dia traz um novo desafio e muita diversão!</p>
+        <a href="campo_multisports.html" target="conteudo" class="btn">Detalhes</a>
+      </div>
+    </div>
+    <div class="card reveal">
+      <img src="https://st4.depositphotos.com/1018611/22963/i/450/depositphotos_229636156-stock-photo-portrait-happy-teenage-boy-making.jpg" alt="Surf & Skate"/>
+      <div class="card-content">
+        <h3><i class="bi bi-water"></i> Mini Olímpicos da Praia</h3>
+        <p>Jogos na areia como mini‑vólei, futebol de praia e corridas com obstáculos. Tudo com segurança, sol e muita animação à beira-mar!.</p>
+        <a href="campo_praia.html" target="conteudo" class="btn">Detalhes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="galeria" class="section" style="background:var(--branco);">
+  <h2 class="reveal" style="color:var(--verde-relva);">Campos de Férias Passados</h2>
+  <p class="reveal" style="text-align:center;max-width:700px;margin:auto;">Espreita a energia, o sorriso e a garra que fazem parte de cada momento nos nossos campos desportivos.</p>
+  <div class="cards" style="margin-top:2rem;">
+    <div class="card reveal"><img src="https://www.clariceabreu.com.br/wp-content/uploads/2018/06/shutterstock_205749475-e1528227460207.jpg" alt="Corrida Sacos"></div>
+    <div class="card reveal"><img src="https://happykids.pt/wp-content/uploads/2021/06/DIVERLHANHOSO-1024x683.jpg" alt="Desportos Radicais"></div>
+    <div class="card reveal"><img src="https://images.trustinnews.pt/uploads/sites/5/2020/06/jq_25junho2019_visita_dra_catarina_arujo_aniversario_missao_ferias_07.jpeg" alt="Corridas"></div>
+    <div class="card reveal"><img src="https://juvigo.pt/assets/img/camp/1284/campo-de-ferias-sintra-jogo-na-praia.jpg" alt="Praia"></div>
+    <div class="card reveal"><img src="https://juvigo.de/assets/img/camp/thumbnail/12930072.jpg" alt="Canoagem"></div>
+    <div class="card reveal"><img src="https://contents.mediadecathlon.com/p2172421/k$a429c273fc3f959a933265a2e139987a/900x0/2812pt1688/4500xcr3375/crianca-a-passar-por-tunel-aquatico.jpg?format=auto" alt="Piscina"></div>
+  </div>
+</section>
+
+<section id="contacto" class="section">
+  <h2 class="reveal" style="color:var(--vermelho-energia);">Queres Participar?</h2>
+  <div class="reveal" style="max-width:600px;margin:auto;text-align:center;">
+    <p>Fala connosco ou garante já a tua vaga!</p>
+    <p><i class="bi bi-envelope-fill"></i> riativokids@outlook.com</p>
+    <p><i class="bi bi-telephone-fill"></i> +351 912 345 678</p>
+    <a href="https://forms.gle/s9RV4b6k1vQfhGPK6" class="btn">Inscrição</a>
+  </div>
+</section>
+<footer class="footer-kids">
+  <div class="container">
+    <div class="footer-row">
+      <!-- Branding -->
+      <div class="footer-col">
+        <h2><img src="images/riativokids.png" alt="logo" class="logo-icon"></h2>
+        <p>Empresa de Eventos Desportivos!</p>
+      </div>
+
+      <!-- Office -->
+      <div class="footer-col">
+        <h3>Office<div class="underline"><span></span></div></h3>
+        <p>
+          Universidade de Aveiro<br>
+          Campus Universitário de Santiago<br>
+          3810-193 Aveiro, Portugal
+        </p>
+        <p><a href="mailto:riativo@outlook.com">riativo@outlook.com</a></p>
+        <p>+351- 912345678</p>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-col">
+        <h3>Links<div class="underline"><span></span></div></h3>
+        <ul>
+          <li><a href="front_page.html">Home</a></li>
+          <li><a href="front_page.html#servicos">Serviços</a></li>
+          <li><a href="empresa.html">Sobre Nós</a></li>
+          <li><a href="utilizador.html">Conta</a></li>
+          <li><a href="front_page.html#booking-form">Contactos</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-col">
+        <h3>Newsletter<div class="underline"><span></span></div></h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email id" required>
+          <button type="submit"><i class="bi bi-arrow-right"></i></button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-whatsapp"></i></a>
+          <a href="#"><i class="bi bi-pinterest"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  // reveal
+  const reveals=document.querySelectorAll('.reveal');
+  const observer=new IntersectionObserver(e=>{
+    e.forEach(el=>{if(el.isIntersecting){el.target.classList.add('active');observer.unobserve(el.target);}});
+ },{threshold:.15});
+  reveals.forEach(r=>observer.observe(r));
+</script>
+</body>
+</html>

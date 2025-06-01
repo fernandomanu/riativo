@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu Lateral Expandível</title>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+  <style>
+    body{
+      margin:0;
+      font-family:Arial, sans-serif;
+    }
+
+    /* ======  MENU  ====== */
+    nav.menu-lateral{
+      width:80px;
+      height:calc(100vh - 80px);
+      background:#202020;
+      padding:40px 0 40px 1%;
+      position:fixed;
+      top:0;
+      left:0;
+      overflow:hidden;
+      transition:width .5s;
+      box-shadow:3px 0 0 #45b3e7;
+      z-index:100;                 /* garante que fica sobre o iframe */
+    }
+    nav.menu-lateral.expandir{width:300px;}
+
+    .btn-expandir{width:100%;padding-left:10px;}
+    .btn-expandir i{color:#fff;font-size:24px;cursor:pointer;}
+
+    ul{height:100%;list-style:none;padding:0;}
+    ul li.item-menu a{
+      color:#fff;text-decoration:none;font-size:20px;
+      padding:20px 4%;display:flex;align-items:center;
+      margin-bottom:20px;line-height:40px;
+      transition:background-color .2s;
+    }
+    ul li.item-menu:hover,
+    ul li.item-menu.ativo{background:#45b3e7;}
+
+    ul li.item-menu a .icon i {
+  font-size: 30px;
+  margin-left: 10px;
+}
+ul li.item-menu a .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  min-width: 40px;
+  margin-left: 0;
+  padding: 0;
+}
+    ul li.item-menu a .txt-link{margin-left:70px;opacity:0;transition:.5s;}
+    nav.menu-lateral.expandir .txt-link{margin-left:40px;opacity:1;}
+
+    /* ======  CONTEÚDO  ====== */
+    main{
+      margin-left:80px;
+      margin-top: 56px;          /* igual à largura inicial do menu */
+      transition:margin-left .5s;
+      min-height: 400px;
+    }
+    /* quando o menu tem a classe .expandir, este selector faz o “push” do conteúdo */
+    nav.menu-lateral.expandir ~ main{
+      margin-left:300px;           /* igual à largura expandida */
+    }
+    /* iframe ocupa toda a área disponível */
+    #conteudo{
+      width:100%;
+      height:100vh;
+      border:none;
+    }
+    /* HEADER GERAL */
+header {
+  position: fixed;
+  top: 0;
+  left: 80px;
+  right: 0;
+  height: 56px;
+  background: #202020;
+  z-index: 101;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CONTEÚDO DO HEADER */
+.top-header {
+  width: 100%;
+  max-width: 1280px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+
+/* LOGO */
+.logo img {
+  height: 40px;
+}
+
+/* MENU PRINCIPAL */
+.menu-horizontal ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu-horizontal ul li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s;
+}
+
+.menu-horizontal ul li a:hover {
+  color: #45b3e7;
+}
+.btn-social a button {
+  width: 40px;
+  height: 40px;
+  font-size: 1.2em;
+  border-radius: 50%;             /* Deixa os botões circulares */
+  background-color: transparent;  /* Fundo transparente */
+  border: 1.5px solid #fff;         /* Borda preta fina */
+  cursor: pointer;                /* Cursor do tipo “mãozinha” */
+  margin-left: 10px;              /* Espaço entre os botões */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border 0.2s;
+}
+.btn-social a button:hover {
+  background: #45b3e7;        /* Destaque ao passar o mouse */
+  border-color: #45b3e7;
+}
+
+.interface {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 8px;
+}
+.btn-social {  
+  display: flex;
+  gap: 10px; /* espaço entre botões */
+}
+.btn-social i {
+  color: #fff !important;
+  font-size: 1.3em;
+  pointer-events: none;
+}
+img, iframe {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+
+@media (max-width: 600px) {
+ header {
+    position: static;
+    width: 100vw;
+    left: 0;
+  }
+  main {
+    margin-left: 0;
+    margin-top: 0;
+  }
+  .top-header, .interface {
+    flex-direction: column;
+    padding: 0 4px;
+    gap: 8px;
+  }
+  .logo img {
+    height: 28px;
+  }
+}
+:root {
+  --verde-relva: #4CAF50;
+  --vermelho-energia: #E53935;
+}
+/* Tema Kids Desportivo */
+body.kids-sports header {
+  background: #fff !important;
+}
+body.kids-sports nav.menu-lateral {
+  background: #fff!important;
+  box-shadow: 3px 0 0 var(--vermelho-energia) !important;
+}
+body.kids-sports nav.menu-lateral ul li.item-menu:hover,
+body.kids-sports nav.menu-lateral ul li.item-menu.ativo {
+  background: var(--vermelho-energia) !important;
+}
+body.kids-sports nav.menu-lateral a,
+body.kids-sports .menu-horizontal ul li a,
+body.kids-sports .btn-social i {
+  color: #fff !important;
+}
+body.kids-sports .btn-social a button:hover {
+  background: var(--vermelho-energia) !important;
+  border-color: var(--vermelho-energia) !important;
+}
+body.kids-sports nav.menu-lateral .icon i {
+  color: var(--vermelho-energia) !important;
+}
+
+/* Esconde a barra lateral no mobile por padrão */
+@media (max-width: 900px) {
+  nav.menu-lateral {
+    left: -200px;           /* Esconde fora do ecrã */
+    width: 180px;
+    transition: left 0.4s;
+    z-index: 200;
+    height: 100vh !important;      
+    min-height: 100vh !important;  
+    max-height: 100vh !important;
+    top: 0;
+  }
+  nav.menu-lateral.expandir {
+    left: 0;                /* Mostra ao expandir */
+  }
+  main {
+    margin-left: 0 !important;
+  }
+  /* Esconde o botão expandir desktop, mostra o mobile */
+  .btn-expandir {
+    display: none;
+  }
+  .btn-expandir-mobile {
+    display: flex !important;
+    position: fixed;
+    top: 6px;
+    left: 16px;
+    z-index: 300;
+    background: #202020;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+  }
+    body.kids-sports .btn-expandir-mobile {
+    background: #fff !important;
+    box-shadow: none !important;
+  }
+  body.kids-sports .btn-expandir-mobile i {
+    color: #E53935 !important;
+  }
+  .btn-expandir-mobile i {
+  color: #fff !important;  
+}
+
+}
+header,
+nav.menu-lateral {
+  transition: background 0.5s, box-shadow 0.5s;
+}
+nav.menu-lateral .icon i,
+.btn-expandir i,
+.btn-expandir-mobile i,
+.btn-social i {
+  transition: color 0.5s;
+}
+
+/* Tema Kids: ícones e botões a vermelho */
+body.kids-sports .btn-expandir i,
+body.kids-sports .btn-expandir-mobile i,
+body.kids-sports .btn-social i {
+  color: var(--vermelho-energia) !important;
+}
+body.kids-sports nav.menu-lateral ul li.item-menu a,
+body.kids-sports nav.menu-lateral ul li.item-menu .txt-link {
+  color: var(--vermelho-energia) !important;
+}
+
+/* Por padrão, esconde o botão mobile */
+.btn-expandir-mobile {
+  display: none;
+}
+/* Hover na barra lateral no tema Kids */
+body.kids-sports nav.menu-lateral ul li.item-menu:hover,
+body.kids-sports nav.menu-lateral ul li.item-menu.ativo {
+  background: #ffd6d6 !important; /* vermelho claro, destaca-se do ícone */
+}
+body.kids-sports nav.menu-lateral ul li.item-menu:hover a,
+body.kids-sports nav.menu-lateral ul li.item-menu:hover .icon i,
+body.kids-sports nav.menu-lateral ul li.item-menu:hover .txt-link {
+  color: #E53935 !important; /* mantém o vermelho energia */
+}
+
+/* Hover nas redes sociais do header no tema Kids */
+body.kids-sports .btn-social a button:hover {
+  background: #ffd6d6 !important;  /* vermelho claro */
+  border-color: #E53935 !important;
+}
+body.kids-sports .btn-social a button:hover i {
+  color: #E53935 !important;
+}
+
+.icon img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+nav.menu-lateral ul li.item-menu .icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0;
+}
+/* Garante que o ícone do utilizador está sempre centrado e visível */
+#icon-utilizador {
+  margin-left: 0 !important;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+/* Borda azul para o ícone predefinido em modo normal */
+#icon-utilizador.borda-azul {
+  border: 2.5px solid #45b3e7 !important;
+}
+
+/* Borda vermelha para o ícone predefinido em modo kids */
+body.kids-sports #icon-utilizador.borda-vermelha {
+  border: 2.5px solid #E53935 !important;
+}
+
+@media (max-width: 768px) {
+  #conteudo {
+    width: 100%;
+    height: auto !important;
+    min-height: 100vh;
+    border: none;
+    display: block;
+    overflow: hidden;
+  }
+}
+
+@media (max-width: 768px) {
+  .btn-social {
+    display: none !important;
+  }
+}
+#icon-utilizador.bi {
+  width: auto;
+  height: auto;
+  font-size: 30px;
+  margin-left: 10px;
+  border-radius: 0;
+  object-fit: unset;
+  display: inline-block;
+  vertical-align: middle;
+  border: none !important;
+  filter: none !important;
+}
+#icon-utilizador:not(.bi) {
+  margin-left: 0 !important;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+  </style>
+</head>
+<body>
+  <!-- Coloca logo após o <body> -->
+<div class="btn-expandir-mobile">
+  <i class="bi bi-list" id="btn-exp-mobile"></i>
+</div>
+<header>
+    <div class="top-header">
+      <div class="interface">
+        <div class="logo">
+          <a href="#">
+            <img id="logo-img" src="images/logotipo.png" alt="Logo">
+          </a>
+        </div>
+        <div class="btn-social">
+          <a href="https://www.instagram.com/ria_tivo/"><button><i class="bi bi-instagram"></i></button></a>
+          <a href="#"><button><i class="bi bi-linkedin"></i></button></a>
+          <a href="#"><button><i class="bi bi-facebook"></i></button></a>
+        </div>
+      </div>
+    </div>
+</header>
+  <!-- ======  MENU  ====== -->
+  <nav class="menu-lateral" id="menu">
+    <div class="btn-expandir">
+      <i class="bi bi-list" id="btn-exp"></i>
+    </div>
+
+    <ul>
+      <li class="item-menu ativo">
+        <a href="front_page.html" target="conteudo">
+          <span class="icon"><i class="bi bi-house"></i></span>
+          <span class="txt-link">Home</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="empresa.html" target="conteudo">
+          <span class="icon"><i class="bi bi-bullseye"></i></span>
+          <span class="txt-link">Empresa</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="equipa.html" target="conteudo">
+          <span class="icon"><i class="bi bi-people"></i></span>
+          <span class="txt-link">Equipa</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a id="link-kids" href="kids.html" target="conteudo">
+          <span class="icon"><i class="bi bi-sun"></i></span>
+          <span class="txt-link">Kids</span>
+        </a>
+      </li>
+      <li class="item-menu">
+        <a href="loja.html" target="conteudo">
+          <span class="icon"><i class="bi bi-bag"></i></span>
+          <span class="txt-link">Loja</span>
+        </a>
+      </li>
+      <li class="item-menu">
+  <a href="utilizador.html" target="conteudo">
+    <span class="icon">
+      <i class="bi bi-person-circle" id="icon-utilizador"></i>
+    </span>
+    <span class="txt-link">Utilizador</span>
+  </a>
+</li>
+
+    </ul>
+  </nav>
+
+  <!-- ======  CONTEÚDO DINÂMICO  ====== -->
+  <main>
+    <!-- carrega a página inicial por defeito -->
+    <iframe id="conteudo" name="conteudo" src="front_page.html"></iframe>
+  </main>
+
+
+  <!-- ======  SCRIPT  ====== -->
+  <script>
+    const btnExp   = document.getElementById('btn-exp');
+    const menu     = document.getElementById('menu');
+    const menuItems= document.querySelectorAll('.item-menu');
+
+    // Restaurar estado guardado
+    if(localStorage.getItem('menuExpandido')==='true'){
+      menu.classList.add('expandir');
+    }
+
+    btnExp.addEventListener('click',()=>{        // expandir/contrair
+      menu.classList.toggle('expandir');
+      localStorage.setItem('menuExpandido',menu.classList.contains('expandir'));
+    });
+
+    // destacar item activo
+    function selectLink(){
+      menuItems.forEach(it=>it.classList.remove('ativo'));
+      this.classList.add('ativo');
+    }
+    menuItems.forEach(it=>it.addEventListener('click',selectLink));
+    const btnExpMobile = document.getElementById('btn-exp-mobile');
+if(btnExpMobile){
+  btnExpMobile.addEventListener('click',()=>{
+    menu.classList.toggle('expandir');
+  });
+}
+function ajustarAlturaIframe() {
+    const iframe = document.getElementById('conteudo');
+    if (!iframe) return;
+    try {
+      // Só funciona se o conteúdo do iframe estiver no mesmo domínio!
+      const doc = iframe.contentDocument || iframe.contentWindow.document;
+      iframe.style.height = doc.body.scrollHeight + "px";
+    } catch (e) {
+      // Se não for possível (domínios diferentes), ignora
+    }
+  }
+  // === NOVO: tema Kids ===
+
+  // Trocar o logo no tema Kids
+function atualizarLogoKids() {
+  const logo = document.getElementById('logo-img');
+  if (!logo) return;
+  if (document.body.classList.contains('kids-sports')) {
+    logo.src = 'images/riativokids.png'; // Caminho do logo Kids
+  } else {
+    logo.src = 'images/logotipo.png'; // Caminho do logo normal
+  }
+}
+
+  //if (localStorage.getItem('temaKids') === 'true') {
+  //  document.body.classList.add('kids-sports');
+  //  atualizarLogoKids();
+  //}
+
+
+  const linkKids = document.getElementById('link-kids');
+  linkKids.addEventListener('click', () => {
+    document.body.classList.add('kids-sports');
+    localStorage.setItem('temaKids', 'true');
+    atualizarLogoKids();
+  });
+  menuItems.forEach(item => {
+    const a = item.querySelector('a');
+    if (a !== linkKids) {
+      a.addEventListener('click', () => {
+        document.body.classList.remove('kids-sports');
+        localStorage.removeItem('temaKids');
+        atualizarLogoKids();
+      });
+    }
+  });
+  // === FIM tema Kids ===
+
+  // Ajusta ao carregar e sempre que muda de página
+  document.getElementById('conteudo').addEventListener('load', ajustarAlturaIframe);
+
+
+  // Atualizar ícone do utilizador se existir no localStorage
+function atualizarIconeUtilizador() {
+  const iconSpan = document.querySelector('a[href="utilizador.html"] .icon');
+  if (!iconSpan) return;
+  const img = localStorage.getItem('iconeSidebar');
+  const isKids = document.body.classList.contains('kids-sports');
+  const svgPadrao = "https://cdn.jsdelivr.net/npm/bootstrap-icons/icons/person-circle.svg";
+
+  // Limpa o conteúdo atual
+  iconSpan.innerHTML = "";
+
+  if (!img || img === svgPadrao) {
+    // Ícone predefinido
+    const icon = document.createElement('i');
+    icon.className = 'bi bi-person-circle';
+    icon.id = 'icon-utilizador';
+    iconSpan.appendChild(icon);
+  } else {
+    // Foto de perfil
+    const foto = document.createElement('img');
+    foto.id = 'icon-utilizador';
+    foto.src = img;
+    foto.alt = "Foto de perfil";
+    foto.width = 36;
+    foto.height = 36;
+    foto.style.borderRadius = "50%";
+    foto.style.objectFit = "cover";
+    if (isKids) {
+      foto.classList.add('borda-vermelha');
+    } else {
+      foto.classList.add('borda-azul');
+    }
+    iconSpan.appendChild(foto);
+  }
+}
+window.addEventListener('DOMContentLoaded', atualizarIconeUtilizador);
+window.addEventListener('storage', atualizarIconeUtilizador); // Atualiza se mudar noutro tab
+
+// Executa ao carregar a página
+atualizarIconeUtilizador();
+
+// Também podes escutar mudanças (opcional para sincronização imediata entre tabs)
+window.addEventListener("storage", function(e) {
+  if (e.key === "iconeSidebar") {
+    atualizarIconeUtilizador();
+  }
+});
+menuItems.forEach(it => it.addEventListener('click', function() {
+  menuItems.forEach(it2 => it2.classList.remove('ativo'));
+  this.classList.add('ativo');
+  // Recolhe o menu se estiver expandido
+  if (menu.classList.contains('expandir')) {
+    menu.classList.remove('expandir');
+    localStorage.setItem('menuExpandido', false);
+  }
+}));
+
+  </script>
+
+</body>
+</html>
+

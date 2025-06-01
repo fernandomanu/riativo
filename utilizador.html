@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riativo Dashboard</title>
+  <link rel="stylesheet" href="fstyle.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css?family=Poppins:400,500,600,700");
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    :root {
+  --azul-projeto: #45b3e7;
+}
+.dashboard h1,
+.dashboard h2,
+.dashboard h3,
+.login-section h2,
+.settings h3,
+.partners h3,
+.events h3 {
+  color: var(--azul-projeto) !important;
+}
+.dashboard h2, .dashboard h3 { color: #222 !important; }
+.dashboard h1 { color: var(--azul-projeto) !important; }
+    
+    :root {
+      --glass-bg: rgba(255, 255, 255, 0.5);
+      --glass-blur: 10px;
+      --accent: #33ccff;
+      --accent-light: rgba(51, 204, 255, 0.2);
+      --text-dark: #333;
+      --text-light: #fff;
+      --radius: 0.5rem;
+    }
+    body {
+      background: url('bg.png') center/cover no-repeat;
+      min-height: 100vh;
+      display: flex;
+      
+    }
+    .hidden { display: none !important; }
+    .dashboard, .login-section {
+      backdrop-filter: blur(var(--glass-blur));
+      background: var(--glass-bg);
+      border-radius: var(--radius);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      max-width: 1200px;
+      width: 100%;
+      padding: 2rem;
+      margin-bottom: 40px;
+
+    }
+    .dashboard {
+        text-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      display: none;
+      grid-template-columns: 1fr 2fr;
+      grid-template-rows: auto 1fr auto;
+      grid-template-areas:
+        "header header"
+        "profile events"
+        "settings partners";
+      gap: 1.5rem;
+    }
+    header {
+      grid-area: header;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 { color: var(--text-light); font-size: 2rem; }
+    .logout-btn {
+      background: crimson;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .profile {
+      grid-area: profile;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .profile img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 1rem;
+      border: 3px solid var(--accent);
+    }
+    .profile h2 { color: var(--text-light); margin-bottom: .5rem; }
+    .points {
+      font-size: 3rem;
+      color: var(--accent);
+      font-weight: 600;
+    }
+    .events {
+      grid-area: events;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+    .events h3 { color: var(--text-light); margin-bottom: 1rem; }
+    .event-list { list-style: none; }
+    .event-item {
+      display: flex;
+      justify-content: space-between;
+      background: var(--accent-light);
+      padding: 1rem;
+      margin-bottom: .75rem;
+      border-radius: var(--radius);
+    }
+    .event-item span { color: var(--text-dark); }
+    .event-item .pts { color: var(--accent); font-weight: 600; }
+    .settings {
+      grid-area: settings;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .settings h3 { color: var(--text-light); margin-bottom: 1rem; }
+    .settings form { display: grid; gap: 1rem; }
+    .settings label {
+      display: block;
+      color: #222;
+      margin-bottom: .25rem;
+    }
+    .settings input {
+  width: 100%;
+  padding: .5rem;
+  border: none;
+  border-radius: var(--radius);
+  color: #222 !important;
+  background: #fff !important;
+}
+    .settings button {
+      padding: .75rem;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: var(--text-light);
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .partners {
+      grid-area: partners;
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+    .partners h3 { color: var(--text-light); margin-bottom: 1rem; }
+    .partner-list { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .partner-item {
+      flex: 1 0 100px;
+      height: 60px;
+      background: var(--accent-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius);
+    }
+    .partner-item img { max-height: 40px; }
+    .login-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-light);
+      gap: 1rem;
+    }
+    .login-section input {
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      border: none;
+    }
+    .login-section button {
+      padding: 0.5rem 1rem;
+      background: var(--accent);
+      border: none;
+      border-radius: var(--radius);
+      color: white;
+      cursor: pointer;
+    }
+    body {
+  background: url('images/perfil.png') center center/cover no-repeat fixed;
+  min-height: 100vh;
+    display: flex;
+  flex-direction: column;
+  padding: 0;
+  /* O resto das tuas regras body pode ficar igual */
+}
+
+.produtos-scroll-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  min-height: 220px;
+}
+.produtos-list {
+  display: flex;
+  gap: 2rem;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding-bottom: 0.5rem;
+  flex: 1;
+}
+.produto-item {
+  flex: 0 0 200px;
+  background: rgba(255,255,255,0.85);
+  border-radius: var(--radius);
+  padding: 1.2rem 1rem 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 140px;
+  box-shadow: 0 4px 16px rgba(51,204,255,0.10);
+  position: relative;
+  transition: transform 0.2s;
+}
+.produto-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(51,204,255,0.18);
+}
+.produto-item img {
+  max-width: 70px;
+  max-height: 70px;
+  margin-bottom: .7rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(51,204,255,0.08);
+}
+.produto-item span {
+  color: #333;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+  text-align: center;
+}
+.pts-prod {
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+.btn-adquirir {
+  background: linear-gradient(90deg, var(--accent), #45b3e7);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 2px 8px rgba(51,204,255,0.08);
+}
+.btn-adquirir:disabled {
+  background: #ccc;
+  color: #888;
+  cursor: not-allowed;
+}
+#notificacao {
+  position: fixed;
+  top: 30%;
+  left: 30%;
+  transform: translateX(-30%, -30%);
+  background: #fff;
+  color: #222;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 24px rgba(51,204,255,0.18);
+  padding: 1.2rem 2rem;
+  z-index: 9999;
+  font-size: 1.1rem;
+  display: none;
+  align-items: center;
+  gap: 1.5rem;
+    min-width: 320px;
+  min-height: 120px;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+#notificacao button {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 0.4rem 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-left: 1rem;
+  transition: background 0.2s;
+}
+#notificacao .cancelar {
+  background: #ccc;
+  color: #333;
+}
+.premios-title {
+  margin-top: 3rem;
+}
+.scroll-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 2px 8px rgba(51,204,255,0.10);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin-top:0; 
+}
+.scroll-btn:hover {
+  background: #45b3e7;
+}
+.loader {
+  border: 4px solid #e0f6ff;
+  border-top: 4px solid var(--accent);
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 1rem auto;
+}
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.footer {
+  flex-shrink: 0;
+  width: 100vw;
+  background: #111;
+  color: #fff;
+}
+
+.footer .container {
+  display: flex;
+  justify-content: center;
+  padding: 32px 5vw 24px 5vw;
+  box-sizing: border-box;
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0;
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.footer-col {
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 300px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .footer-row {
+    gap: 24px;
+  }
+  .footer-col {
+    flex: 1 1 45%;
+    min-width: 180px;
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .footer-col {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+main {
+  flex: 1 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.login-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--text-light);
+  gap: 1rem;
+  margin-top: 4rem; /* Adiciona espaço ao topo */
+}
+.profile-pic-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.edit-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background: var(--accent);
+  color: white;
+  font-size: 16px;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+/* === RESPONSIVIDADE TOTAL DO DASHBOARD === */
+
+/* 1. Layout adaptável */
+@media (max-width: 799px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "profile"
+      "events"
+      "settings"
+      "partners";
+  }
+  .dashboard > section,
+  .profile {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 1199px) {
+  .dashboard {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "header   header"
+      "profile  events"
+      "settings events"
+      "partners partners";
+  }
+}
+
+/* 2. Fontes fluidas com clamp */
+:root {
+  --step--2: clamp(0.7rem, 0.75vw + 0.5rem, 0.85rem);
+  --step--1: clamp(0.9rem, 0.85vw + 0.55rem, 1rem);
+  --step-0 : clamp(1rem,  1vw  + 0.6rem, 1.15rem);
+  --step-1 : clamp(1.3rem,1.3vw + 0.7rem, 1.6rem);
+  --step-2 : clamp(1.8rem,1.7vw + 0.8rem, 2.4rem);
+}
+body { font-size: var(--step--1); }
+h1   { font-size: var(--step-2); }
+h2, .points { font-size: var(--step-1); }
+
+/* 3. Prevenção de overflow */
+.profile,
+.events,
+.settings,
+.partners {
+  min-width: 0;
+  overflow: hidden;
+}
+.events {
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+/* 4. Produtos responsivos com snap */
+.produtos-list {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 0.25rem 1rem;
+}
+.produto-item {
+  flex: 0 0 clamp(160px, 40vw, 220px);
+  scroll-snap-align: center;
+}
+
+/* 5. Imagens adaptáveis */
+.profile-pic-wrapper {
+  aspect-ratio: 1 / 1;
+  width: clamp(100px, 30vw, 160px);
+}
+.profile img {
+  width: 100%;
+  height: 100%;
+}
+.edit-icon {
+  font-size: clamp(14px, 4vw, 18px);
+}
+
+/* 6. Botões full width no mobile */
+@media (max-width: 599px) {
+  button,
+  .btn-adquirir,
+  .logout-btn {
+    width: 100%;
+  }
+  .settings form {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 600px) {
+  #notificacao {
+    min-width: 0 !important;
+    width: 90vw !important;
+    max-width: 96vw !important;
+    left: 50% !important;
+    top: 20% !important;
+    transform: translate(-50%, 0) !important;
+    font-size: 1rem !important;
+    padding: 1rem 2vw !important;
+    box-sizing: border-box;
+  }
+  #notificacao button {
+    width: 100%;
+    margin: 0.5rem 0 0 0;
+    font-size: 1rem;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+<main>
+  <div class="login-section" id="loginSection">
+    <h2>Entrar</h2>
+    <input type="text" id="loginName" placeholder="Nome de utilizador">
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPassword" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <p>Ou <a href="#" onclick="abrirRegisto()">criar conta</a></p>
+
+  </div>
+  <div class="login-section hidden" id="registerSection">
+  <h2>Criar Conta</h2>
+  <input type="text" id="registerName" placeholder="Nome de utilizador">
+  <input type="email" id="registerEmail" placeholder="Email">
+  <input type="password" id="registerPassword" placeholder="Password">
+  <button onclick="criarConta()">Registar</button>
+  <p>Já tens conta? <a href="#" onclick="voltarLogin()">Fazer login</a></p>
+</div>
+
+  <div class="dashboard" id="dashboard">
+    <header>
+      <h1>Riativo Dashboard</h1>
+      <div>
+        <span class="user-greet">Olá, <span id="userName"></span></span>
+        <button class="logout-btn" onclick="logout()">Sair</button>
+      </div>
+    </header>
+    <div class="profile">
+      <div class="profile-pic-wrapper">
+  <img id="profilePic" src="images/foto_perfil.jpg" alt="Profile">
+  <label for="profileUpload" class="edit-icon">&#9998;</label>
+  <input type="file" id="profileUpload" accept="image/*" hidden>
+</div>
+
+      <h2 id="profileName"></h2>
+      <div>Pontos Totais</div>
+      <div class="points" id="totalPoints">0</div>
+    </div>
+    <section class="events">
+      <h3>Eventos frequentados</h3>
+      <ul class="event-list" id="eventList"></ul>
+    </section>
+    <section class="settings">
+      <h3>Configurações</h3>
+      <form id="settingsForm">
+        <label for="inputName">Nome</label>
+        <input type="text" id="inputName">
+        <label for="inputEmail">E-mail</label>
+        <input type="email" id="inputEmail">
+        <button type="submit">Salvar</button>
+      </form>
+    </section>
+    <section class="partners">
+      <h3>Parceiros</h3>      
+      <div class="partner-list" id="partnerList"></div>
+      <h3 class="premios-title">Ganhe Prémios através dos Pontos RIAtivo</h3>
+<!-- Substitui o teu .produtos-list por este -->
+<div class="produtos-list" id="produtosList"></div>
+
+    </section>
+  </div>
+  </main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <!-- Branding -->
+      <div class="footer-col">
+        <h2><img src="images/logotipo.png" alt="logo" class="logo-icon"></h2>
+        <p>Empresa de Eventos Desportivos!</p>
+      </div>
+
+      <!-- Office -->
+      <div class="footer-col">
+        <h3>Office<div class="underline"><span></span></div></h3>
+        <p>
+          Universidade de Aveiro<br>
+          Campus Universitário de Santiago<br>
+          3810-193 Aveiro, Portugal
+        </p>
+        <p><a href="mailto:riativo@outlook.com">riatico@outlook.com</a></p>
+        <p>+351- 912345678</p>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-col">
+        <h3>Links<div class="underline"><span></span></div></h3>
+        <ul>
+          <li><a href="front_page.html">Home</a></li>
+          <li><a href="front_page.html#servicos">Serviços</a></li>
+          <li><a href="empresa.html">Sobre Nós</a></li>
+          <li><a href="utilizador.html">Conta</a></li>
+          <li><a href="front_page.html#booking-form">Contactos</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-col">
+        <h3>Newsletter<div class="underline"><span></span></div></h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email id" required>
+          <button type="submit"><i class="bi bi-arrow-right"></i></button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-whatsapp"></i></a>
+          <a href="#"><i class="bi bi-pinterest"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  <script>
+    const events = [
+      { title: 'Sunset Wellness by RIAtivo', date: '2025-04-10', points: 10 },
+      { title: 'Maratona da Ria – “Corre com o Canal”', date: '2025-05-05', points: 20 },
+      { title: 'Torneio de Futebol de Rua – Bairro com Jogo', date: '2025-05-20', points: 15 }
+    ];
+    const partners = [ 'images/benfica.png', 'images/ua.png', 'images/dazn.png' ];
+
+    function abrirDashboard() {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        showDashboard(user);
+      } else {
+        document.getElementById('loginSection').classList.remove('hidden');
+        document.getElementById('dashboard').style.display = 'none';
+      }
+    }
+
+    function login() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (!user) {
+    alert('Credenciais inválidas.');
+    return;
+  }
+
+  localStorage.setItem('user', JSON.stringify(user));
+  localStorage.setItem('iconeSidebar', user.profileImg);
+  showDashboard(user);
+}
+
+
+    function criarConta() {
+  const username = document.getElementById('registerName').value;
+  const email = document.getElementById('registerEmail').value;
+  const password = document.getElementById('registerPassword').value;
+
+  if (!username || !email || !password) {
+    alert('Preencha todos os campos.');
+    return;
+  }
+
+  let users = JSON.parse(localStorage.getItem('users')) || [];
+
+  if (users.some(u => u.email === email)) {
+    alert('Já existe uma conta com este email.');
+    return;
+  }
+
+  const newUser = { username, email, password, profileImg: 'images/foto_perfil.jpg' };
+  users.push(newUser);
+
+  localStorage.setItem('users', JSON.stringify(users));
+  localStorage.setItem('user', JSON.stringify(newUser));
+  localStorage.setItem('iconeSidebar', newUser.profileImg);
+
+  showDashboard(newUser);
+}
+
+
+    function showDashboard(user) {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('registerSection').classList.add('hidden'); // <-- esta linha nova
+      const dash = document.getElementById('dashboard');
+      dash.style.display = 'grid';
+      document.getElementById('userName').textContent = user.username;
+      document.getElementById('profileName').textContent = user.username;
+      document.getElementById('profilePic').src = user.profileImg;
+
+      let total = 0;
+      const listEl = document.getElementById('eventList');
+      listEl.innerHTML = '';
+      events.forEach(ev => {
+        total += ev.points;
+        const li = document.createElement('li');
+        li.className = 'event-item';
+        li.innerHTML = `<span>${ev.title} (${ev.date})</span><span class="pts">+${ev.points} pts</span>`;
+        listEl.appendChild(li);
+      });
+      document.getElementById('totalPoints').textContent = total;
+
+      const pList = document.getElementById('partnerList');
+      pList.innerHTML = '';
+      partners.forEach(src => {
+        const div = document.createElement('div');
+        div.className = 'partner-item';
+        div.innerHTML = `<img src="${src}" alt="Parceiro">`;
+        pList.appendChild(div);
+const prodList = document.getElementById('produtosList');
+prodList.innerHTML = '';
+produtos.forEach((prod, idx) => {
+  const div = document.createElement('div');
+  div.className = 'produto-item';
+  div.innerHTML = `
+    <img src="${prod.img}" alt="${prod.nome}">
+    <span>${prod.nome}</span>
+    <span class="pts-prod">${prod.pontos} pts</span>
+    <button class="btn-adquirir" data-idx="${idx}">Adquirir</button>
+  `;
+  prodList.appendChild(div);
+  // Desativa botão se não tiver pontos suficientes
+  const btn = div.querySelector('.btn-adquirir');
+  if (total < prod.pontos) btn.disabled = true;
+  btn.addEventListener('click', () => confirmarCompra(prod, total));
+});
+
+      });
+
+      document.getElementById('inputName').value = user.username;
+      document.getElementById('inputEmail').value = user.email;
+    }
+
+    document.getElementById('settingsForm').addEventListener('submit', e => {
+      e.preventDefault();
+      const username = document.getElementById('inputName').value;
+      const email = document.getElementById('inputEmail').value;
+      const user = { username, email, password: '123', profileImg: 'profile.png' };
+      localStorage.setItem('user', JSON.stringify(user));
+      alert('Dados atualizados!');
+      showDashboard(user);
+    });
+
+    function logout() {
+      localStorage.removeItem('user');
+      document.getElementById('dashboard').style.display = 'none';
+      document.getElementById('loginSection').classList.remove('hidden');
+      location.reload();
+      localStorage.removeItem('iconeSidebar');
+
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user) {
+        showDashboard(user);
+      } else {
+        document.getElementById('loginSection').classList.remove('hidden');
+      }
+    });
+    const produtos = [
+  { nome: 'T-shirt RIAtivo', img: 'images/camisola.png', pontos: 50 },
+  { nome: 'Garrafa Desportiva', img: 'images/garrafa.png', pontos: 30 },
+  { nome: 'Subscrição Mensal DAZN', img: 'images/subscricao.png', pontos: 80 }
+];
+
+function confirmarCompra(produto, pontosAtuais) {
+  const notificacao = document.getElementById('notificacao');
+  notificacao.innerHTML = `
+    <span>Deseja mesmo adquirir <b>${produto.nome}</b> por <b>${produto.pontos} pts</b>?</span>
+    <button onclick="finalizarCompra('${produto.nome}', ${produto.pontos})">Sim</button>
+    <button class="cancelar" onclick="fecharNotificacao()">Cancelar</button>
+  `;
+  notificacao.style.display = 'flex';
+}
+
+function fecharNotificacao() {
+  document.getElementById('notificacao').style.display = 'none';
+}
+
+function finalizarCompra(nomeProduto, pontosNecessarios) {
+  let total = parseInt(document.getElementById('totalPoints').textContent, 10);
+  if (total < pontosNecessarios) {
+    alert('Pontos insuficientes!');
+    fecharNotificacao();
+    return;
+  }
+  // Mostra loader
+  const notificacao = document.getElementById('notificacao');
+  notificacao.innerHTML = `<div class="loader"></div><span>A processar...</span>`;
+  notificacao.style.display = 'flex';
+
+  setTimeout(() => {
+    total -= pontosNecessarios;
+    document.getElementById('totalPoints').textContent = total;
+    notificacao.innerHTML = `<span>Produto <b>${nomeProduto}</b> adquirido com sucesso! Informações de expedição enviadas para o seu email</span>`;
+    // Opcional: desativar botões se não houver pontos suficientes
+    document.querySelectorAll('.btn-adquirir').forEach((btn, idx) => {
+      const pontos = produtos[idx].pontos;
+      btn.disabled = total < pontos;
+    });
+    setTimeout(() => notificacao.style.display = 'none', 5000);
+  }, 1200); // tempo do "carregamento"
+}
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollBtn = document.getElementById('scrollRightBtn');
+  const prodList = document.getElementById('produtosList');
+  if (scrollBtn && prodList) {
+    scrollBtn.addEventListener('click', () => {
+      prodList.scrollBy({ left: prodList.offsetWidth, behavior: 'smooth' });
+    });
+  }
+});
+function abrirRegisto() {
+  document.getElementById('loginSection').classList.add('hidden');
+  document.getElementById('registerSection').classList.remove('hidden');
+}
+
+function voltarLogin() {
+  document.getElementById('registerSection').classList.add('hidden');
+  document.getElementById('loginSection').classList.remove('hidden');
+}
+document.getElementById('profileUpload').addEventListener('change', function () {
+  const file = this.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const newImg = e.target.result;
+      document.getElementById('profilePic').src = newImg;
+
+      // Atualizar utilizador atual
+      let user = JSON.parse(localStorage.getItem('user'));
+      user.profileImg = newImg;
+      localStorage.setItem('user', JSON.stringify(user));
+
+      // Atualizar na lista de utilizadores
+      let users = JSON.parse(localStorage.getItem('users')) || [];
+      users = users.map(u => {
+        if (u.email === user.email) {
+          return { ...u, profileImg: newImg };
+        }
+        return u;
+      });
+      localStorage.setItem('users', JSON.stringify(users));
+      localStorage.setItem('iconeSidebar', newImg);
+    };
+    reader.readAsDataURL(file); // converte para Base64
+  }
+});
+
+  </script>
+  <div id="notificacao"></div>
+
+  
+</body>
+</html>

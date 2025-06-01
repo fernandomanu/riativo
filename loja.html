@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchandising RIAtivo</title>
+<link rel="stylesheet" href="fstyle.css">
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Vanilla‑Tilt -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js" defer></script>
+
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Poppins',Arial, sans-serif;              /* combina com o layout geral */
+      color:#fff;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:40px 20px;
+      background: 
+        linear-gradient(to right, rgba(69,179,231,0.7), transparent 70%), /* shadow azul */
+        url('images/loja_fundo.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    /* ----------   TÍTULO & SUBTÍTULO   ---------- */
+    h1{
+      font-size:clamp(2.2rem,5vw,3.5rem);
+      font-weight:800;
+      margin-bottom:8px;
+      text-align:center;
+      letter-spacing: 2px;
+      text-shadow: 2px 2px 12px #000a;
+    }
+    p.sub{
+      font-size:clamp(1rem,2vw,1.3rem);
+      font-weight:400;
+      text-align:center;
+      max-width:620px;
+      margin-bottom:40px;
+      line-height:1.4;
+      text-shadow: 1px 1px 8px #0008;
+    }
+
+    /* ----------   CARDS   ---------- */
+
+/* Só para a secção dos produtos */
+
+
+    .card {
+      width: 300px;
+      height: 450px;
+      padding: 20px;
+      border-radius: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transform-style: preserve-3d;
+      overflow: visible;   
+      border: 3px solid #fff;
+      box-shadow: 0 4px 24px #0002;
+    }
+
+    .card1 {
+      background-image: linear-gradient(45deg, #3399ff, #45b3e7);
+    }
+
+    .card2 {
+      background-image: linear-gradient(45deg, #3399ff, #45b3e7);
+    }
+
+    .card h2 {
+      color: #fff;
+      transform-style: preserve-3d;
+    }
+
+    .produto {
+       max-width: 170px; /* Define uma largura fixa */
+       max-height: 170px;
+       object-fit: contain; /* Garante que a imagem se ajuste proporcionalmente */
+       transition: 0.5s;
+       transform-style: preserve-3d;
+    }
+
+    .card:hover .produto {
+  transform: translate3d(0, 0, 100px); /* Move a imagem para frente no eixo Z */
+}
+
+    .card button {
+      padding: 10px 40px;
+      background-color: #fff;
+      color: #45b3e7;
+      font-size: 20px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.5s;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover button {
+      transform: translate3d(0, 0, 100px);
+    }
+
+    .comprar-btn {
+  display: inline-block;
+  padding: 10px 40px;
+  background-color: #fff;
+  color: #45b3e7;
+  font-size: 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: 0.5s;
+  text-decoration: none;
+  text-align: center;
+  transform-style: preserve-3d;
+}
+.card:hover .comprar-btn {
+  transform: translate3d(0, 0, 100px);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* Remove padding global para não afastar o footer */
+}
+
+main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+.footer {
+  flex-shrink: 0;
+  width: 100vw;
+  background: #111;
+  color: #fff;
+}
+
+.footer .container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  max-width: 100vw;
+  width: 100vw;
+  margin: 0;
+  padding: 32px 5vw 24px 5vw;
+  box-sizing: border-box;
+  height: auto; /* força altura automática */
+}
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;      /* centra as colunas */
+  align-items: flex-start;
+  gap: 32px;
+  max-width: 1200px;            /* limita largura máxima */
+  margin: 0 auto;               /* centra o bloco */
+}
+
+.footer-col {
+  flex: 1 1 200px;
+  min-width: 200px;
+  max-width: 300px;
+  margin-bottom: 0;
+}
+
+@media (max-width: 900px) {
+  .footer-row {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+  .footer-col {
+    flex: 1 1 45%;
+    min-width: 180px;
+    max-width: 100%;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-row {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .footer-col {
+    min-width: 0;
+    max-width: 100%;
+  }
+}
+.card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  background: transparent;
+  border-radius: 10px;
+  padding: 0 0 10px 0;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.card-info label {
+  color: #e0e0e0;
+  font-size: 0.98rem;
+  margin-bottom: 2px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.card-info select {
+  width: 100%;
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1.5px solid #45b3e7;
+  background: rgba(255,255,255,0.85);
+  color: #222;
+  font-size: 1rem;
+  outline: none;
+  transition: border 0.2s;
+  margin-bottom: 2px;
+  appearance: none;
+  box-shadow: none;
+}
+
+.card-info select:focus {
+  border: 1.5px solid #3399ff;
+}
+
+.card-info .preco {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.08rem;
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.produtos-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto 48px auto;
+  padding: 0 20px;
+}
+  /* ---------- Tablets (≤ 900 px) ---------- */
+@media (max-width: 900px) {
+  .produtos-container {
+    gap: 24px;
+    padding: 0 8px;
+  }
+  .card {
+    width: clamp(220px, 80vw, 320px);
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .produtos-container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 18px !important;
+    padding: 0 4vw !important;
+  }
+  .card {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    margin: 0 auto !important;
+    padding: 14px !important;
+    height: auto !important;
+  }
+  .produto {
+    max-width: 140px !important;
+    margin: 0 auto !important;
+  }
+}
+
+@media (max-width: 400px) {
+  h1    { font-size: 1.6rem; }
+  p.sub { font-size: 0.95rem; padding: 0 6px; }
+  .card { padding: 14px; }
+  .footer .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 20px;
+  }
+}
+
+
+  </style>
+</head>
+<body>
+
+  <!-- Título & Sub‑título -->
+  <h1>Loja RIAtivo</h1>
+  <p class="sub">
+    Nesta secção poderás comprar diversos produtos oficiais do projeto RIAtivo — desde
+    equipamentos desportivos a acessórios exclusivos.
+  </p>
+<div class="container produtos-container">
+  <!-- Equipamento SL Benfica -->
+  <div class="card card1">
+    <h2>Equipamento SL Benfica</h2>
+    <img src="images/camisola.png" alt="Camisola RIAtivo" class="produto">
+    <div class="card-info">
+      <div class="preco">Preço: <strong>100€</strong></div>
+      <label for="tamanho-camisola">Tamanho:</label>
+      <select id="tamanho-camisola">
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+        <option value="XL">XL</option>
+      </select>
+    </div>
+    <a href="compra.html?produto=camisola" class="comprar-btn">Comprar</a>
+  </div>
+
+  <!-- Garrafa -->
+  <div class="card card2">
+    <h2>Garrafa RIAtivo</h2>
+    <img src="images/garrafa.png" alt="Garrafa RIAtivo" class="produto">
+    <div class="card-info">
+      <div class="preco">Preço: <strong>8€</strong></div>
+      <label for="capacidade-garrafa">Capacidade:</label>
+      <select id="capacidade-garrafa">
+        <option value="0.33">0,33L</option>
+        <option value="0.5">0,5L</option>
+        <option value="0.75">0,75L</option>
+      </select>
+    </div>
+    <a href="compra.html?produto=garrafa" class="comprar-btn">Comprar</a>
+  </div>
+
+  <!-- Capa -->
+  <div class="card card2">
+    <h2>Capa Iphone RIAtivo</h2>
+    <img src="images/capa.png" alt="Capa RIAtivo" class="produto">
+    <div class="card-info">
+      <div class="preco">Preço: <strong>12€</strong></div>
+      <label for="modelo-capa">Modelo:</label>
+      <select id="modelo-capa">
+        <option value="iphone11">iPhone 11</option>
+        <option value="iphone12">iPhone 12</option>
+        <option value="iphone13">iPhone 13</option>
+        <option value="iphone14">iPhone 14</option>
+      </select>
+    </div>
+    <a href="compra.html?produto=capa" class="comprar-btn">Comprar</a>
+  </div>
+</div>
+</div>
+  <footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <!-- Branding -->
+      <div class="footer-col">
+        <h2><img src="images/logotipo.png" alt="logo" class="logo-icon"></h2>
+        <p>Empresa de Eventos Desportivos!</p>
+      </div>
+
+      <!-- Office -->
+      <div class="footer-col">
+        <h3>Office<div class="underline"><span></span></div></h3>
+        <p>
+          Universidade de Aveiro<br>
+          Campus Universitário de Santiago<br>
+          3810-193 Aveiro, Portugal
+        </p>
+        <p><a href="mailto:riativo@outlook.com">riatico@outlook.com</a></p>
+        <p>+351- 912345678</p>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-col">
+        <h3>Links<div class="underline"><span></span></div></h3>
+        <ul>
+          <li><a href="front_page.html">Home</a></li>
+          <li><a href="front_page.html#servicos">Serviços</a></li>
+          <li><a href="empresa.html">Sobre Nós</a></li>
+          <li><a href="utilizador.html">Conta</a></li>
+          <li><a href="front_page.html#booking-form">Contactos</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-col">
+        <h3>Newsletter<div class="underline"><span></span></div></h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email id" required>
+          <button type="submit"><i class="bi bi-arrow-right"></i></button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-whatsapp"></i></a>
+          <a href="#"><i class="bi bi-pinterest"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- Ini­cia Vanilla‑Tilt após o DOM estar pronto -->
+  <script>
+    document.addEventListener('DOMContentLoaded',()=>{
+      VanillaTilt.init(document.querySelectorAll('.card'),{
+        max:25,
+        speed:400,
+        glare:true,
+        'max-glare':0.5
+      });
+    });
+     /* Desativa o efeito tilt no mobile */
+
+    if (window.innerWidth < 600) {
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => card.vanillaTilt.destroy());
+    }
+  
+
+  </script>
+</body>
+</html>

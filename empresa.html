@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cronograma RIAtivo – Trajetória Ampliada</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+<link rel="stylesheet" href="fstyle.css">
+  <style>
+    /* ---------- RESET & BASE ---------- */
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{
+      font-family:'Poppins',Arial,sans-serif;
+      background:#000;color:#fff;position:relative;overflow-x:hidden;
+    }
+
+    /* ---------- FUNDO/AMBIENTE ---------- */
+    .img-jogadores{
+      display:block;width:100vw;max-width:100%;height:auto;margin:0 auto;position:relative;z-index:1;
+    }
+    /* holofotes */
+    .spotlight-left,.spotlight-right{
+      position:fixed;top:0;width:320px;height:500px;pointer-events:none;z-index:3;opacity:.85;
+      background:radial-gradient(ellipse 60% 100% at 30% 0%,rgba(255,255,255,.25) 0%,rgba(255,255,255,.07) 60%,transparent 100%);
+    }
+    .spotlight-left{left:0;transform:rotate(-18deg);}
+    .spotlight-right{right:0;transform:rotate(18deg);
+      background:radial-gradient(ellipse 60% 100% at 70% 0%,rgba(255,255,255,.25) 0%,rgba(255,255,255,.07) 60%,transparent 100%);
+    }
+
+    /* ---------- CORES & VARIÁVEIS ---------- */
+    :root{
+      --blue:#45b3e7;
+      --white:rgba(255,255,255,.9);
+      --card-bg:rgba(255,255,255,.06);
+      --border:rgba(255,255,255,.18);
+    }
+
+    /* ---------- TÍTULOS DE SECÇÃO ---------- */
+    .sec-titulo{
+      text-align:center;
+      font-size:clamp(2rem,5vw,2.8rem);
+      margin:60px 0 40px;
+      color:var(--blue);
+      text-shadow:0 0 12px #000a;
+    }
+
+    h1, .sec-titulo {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 60px;
+  text-align: center;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 12px #000a;
+  color: #fff; /* ou a cor que usas nos títulos */
+}
+
+    /* ========== CRONOGRAMA ========== */
+    #cronograma{padding:0 0 120px;}
+
+    #timelineWrapper {
+  position: relative;
+  padding: 0 40px;
+  display: flex;
+  justify-content: center;
+  overflow-x: visible; /* Garante que não há scroll horizontal */
+}
+
+
+.timeline {
+  display: flex;
+  align-items: center;
+  gap: 140px;
+  position: relative;
+  left: 0 !important; /* Garante que não fica deslocada pelo JS */
+  width: auto;        /* Deixa a timeline ocupar só o espaço necessário */
+  margin: 0 auto;     /* Centraliza */
+  min-width: 0;       /* Remove min-width que possa causar overflow */
+  max-width: 100%;
+}
+    .timeline::before{
+      content:'';position:absolute;top:50%;left:0;right:0;height:4px;
+      background:var(--border);z-index:0;
+    }
+    .timeline li{list-style:none;position:relative;}
+  .timeline .ano {
+  display: block;
+  text-align: center;
+  font-weight: bold;
+  color: var(--blue);
+  margin-bottom: 12px;
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+}
+
+    /* ponto */
+    .dot{
+      width:28px;height:28px;border-radius:50%;
+      background:var(--border);border:4px solid var(--blue);
+      cursor:pointer;transition:transform .3s,background .3s;position:relative;z-index:2;
+    }
+    .timeline li:hover .dot{transform:scale(1.2);background:var(--blue);}
+
+    /* cartão */
+    .card{
+      position:absolute;top:calc(100% + 30px);left:50%;
+      transform:translateX(-50%) scale(.8);width:280px;
+      background:var(--card-bg);border:2px solid var(--border);border-radius:20px;
+      backdrop-filter:blur(6px);padding:22px 26px;
+      color:var(--white);box-shadow:0 8px 24px rgba(0,0,0,.45);
+      opacity:0;pointer-events:none;transition:opacity .4s,transform .4s;
+    }
+    .timeline li.open .card{opacity:1;pointer-events:auto;transform:translateX(-50%) scale(1);}
+
+    .card h3{color:var(--blue);margin-bottom:10px;}
+    .card::after{
+      content:'';position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+      border:6px solid transparent;border-bottom-color:var(--card-bg);
+    }
+
+    /* ---------- SOBRE NÓS ---------- */
+    #sobre{padding:100px 20px;background: none;margin-bottom:100px;}
+
+    .sobre-intro p{line-height:1.6;margin-bottom:20px;font-size:1rem;text-align: center;}
+
+    .sobre-grid{
+      display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:30px;margin-top:50px;
+    }
+    .sobre-card{
+      background:var(--card-bg);border:2px solid var(--border);border-radius:20px;
+      backdrop-filter:blur(6px);padding:34px 22px;text-align:center;
+      transition:.4s;box-shadow:0 4px 18px rgba(0,0,0,.4);
+    }
+    .sobre-card:hover{
+      background:rgba(69,179,231,.25);border-color:var(--blue);transform:translateY(-8px);
+    }
+    .sobre-card h3{margin-top:15px;font-size:1.4rem;color:var(--blue);}
+    .sobre-card p{margin-top:10px;line-height:1.5;font-size:.95rem;}
+    .icon{font-size:2.4rem;color:var(--blue);}
+
+    /* ---------- RESPONSIVO ---------- */
+    @media(max-width:768px){
+      .timeline{gap:90px;}
+      .card{width:240px;}
+    }
+    
+    body {
+  font-family:'Poppins',Arial,sans-serif;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('images/trofeus.png') center center/cover no-repeat fixed;
+  background-blend-mode: darken;
+  color:#fff;
+  position:relative;
+  overflow-x:hidden;
+}
+
+.sobre-header {
+  text-align: center;
+  margin: 60px 0 40px 0;
+}
+.sobre-header .sec-titulo {
+  color: var(--blue);
+  text-shadow: 0 0 12px #000a;
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  margin-bottom: 20px;
+}
+.sobre-desc {
+  color: #fff;
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto 40px auto;
+  text-shadow: 0 2px 8px #000a;
+}
+.sobre-box {
+  background: #fff;
+  border: 2px solid #45b3e7; /* contorno azul subtil */
+  border-radius: 20px;
+  backdrop-filter: blur(6px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.10);
+  padding: 48px 32px;
+  max-width: 1100px;
+  margin: 0 auto;
+  color: #45b3e7; /* texto azul igual aos serviços */
+}
+.sobre-nos-titulo .sobre-preto {
+  color: #222;
+}
+.sobre-nos-titulo .sobre-azul {
+  color: #45b3e7;
+}
+
+.sobre-box h2,
+.sobre-box h3 {
+  color: #45b3e7;
+  text-align: center;
+}
+
+.sobre-box p {
+  color: #222; /* texto dos parágrafos a cinza escuro para boa leitura */
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.sobre-box strong {
+  color: #45b3e7;
+}
+.sobre-box,
+.sobre-box h2,
+.sobre-box h3,
+.sobre-box p,
+.sobre-nos-titulo {
+  text-shadow: none !important;
+}
+.bg-gradient {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  /* Gradiente azul suave vindo do lado esquerdo */
+  background: linear-gradient(90deg, rgba(69,179,231,0.22) 0%, rgba(69,179,231,0.08) 40%, transparent 70%);
+}
+/* cartão visível (auto-play OU manual) */
+.timeline li.show .card,
+.timeline li.hold .card {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) scale(1);
+}
+
+/* estilo ESPECÍFICO para o hold (branco) */
+.timeline li.hold .card {
+  background: #fff;
+  color: #222;
+  border-color: #45b3e7;
+  box-shadow: 0 8px 24px rgba(69,179,231,.10);
+}
+
+.timeline li.hold .card h3 { color: #45b3e7; }
+.timeline li.hold .card p  { color: #222; }
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.sobre-box {
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.sobre-box.animated {
+  animation: fadeInUp 1.2s cubic-bezier(.23,1.01,.32,1) both;
+  opacity: 1;
+}
+@media (max-width: 480px) {
+  #timelineWrapper { padding: 0 0 0 26px; }   /* margem para a linha */
+
+  .timeline {
+    flex-direction: column;
+    gap: 60px;
+    align-items: flex-start;
+  }
+  .timeline li.hold .card {
+    transform: none !important; /* Impede que se mexa */
+    left: 0 !important;          /* Garante alinhamento */
+    margin-left: 0 !important;
+  }
+  /* linha vertical */
+  .timeline::before {
+    left: 14px;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    height: auto;
+  }
+
+  .dot { position: static; margin-bottom: 12px; }
+
+  /* cartão em fluxo normal, largura total */
+  .card {
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    bottom: 0 !important;
+    transform: none !important;
+    width: calc(100vw - 60px);
+    max-width: 360px;
+    opacity: 1 !important;             /* sempre visível */
+    margin-top: 12px;
+  }
+
+  /* ano por cima do cartão para headline */
+  .ano { margin-bottom: 4px; }
+
+  .timeline .card::after {
+    display: none; /* remove o triângulo decorativo */
+  }
+
+  .timeline li.show .card,
+  .timeline li.hold .card {
+    opacity: 1 !important;
+    pointer-events: auto;
+    transform: none !important;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="bg-gradient"></div>
+  <div class="dark-overlay"></div>
+  <header class="sobre-header">
+  <img src="images/logotipo.png" alt="Logotipo RIAtivo" class="logo-topo" style="max-width:220px; margin: 0 auto 24px; display:block;">
+  <p class="sobre-desc">
+    A RIAtivo é uma empresa jovem e dinâmica dedicada à promoção do desporto e da comunidade em Aveiro. Organizamos eventos inovadores, inclusivos e memoráveis, promovendo o bem-estar, a competição saudável e a ligação entre pessoas.
+  </p>
+</header>
+  <!-- ===== CRONOGRAMA ===== -->
+  <section id="cronograma">
+    <h2 class="sec-titulo">Cronograma RIAtivo</h2>
+    <div id="timelineWrapper">
+      <ul class="timeline">
+        <li data-ano="2010">
+          <span class="ano">2010</span>
+          <div class="dot"></div>
+          <article class="card">
+            <h3>2010</h3>
+            <p>Fundação da RIAtivo — três jovens apaixonados pelo desporto e pela comunidade unem forças.</p>
+          </article>
+        </li>
+
+        <li data-ano="2012">
+          <span class="ano">2012</span>
+          <div class="dot"></div>
+          <article class="card">
+            <h3>2012</h3>
+            <p>Realização do primeiro grande evento desportivo com mais de 500 participantes.</p>
+          </article>
+        </li>
+
+        <li data-ano="2015">
+          <span class="ano">2015</span>
+          <div class="dot"></div>
+          <article class="card">
+            <h3>2015</h3>
+            <p>Expansão a nível nacional com eventos em 8 distritos portugueses.</p>
+          </article>
+        </li>
+
+        <li data-ano="2018">
+          <span class="ano">2018</span>
+          <div class="dot"></div>
+          <article class="card">
+            <h3>2018</h3>
+            <p>Parceria com organizações internacionais focadas na juventude e desporto.</p>
+          </article>
+        </li>
+
+        <li data-ano="2021">
+          <span class="ano">2021</span>
+          <div class="dot"></div>
+          <article class="card">
+            <h3>2021</h3>
+            <p>Lançamento da plataforma online que conecta atletas e eventos por todo o país.</p>
+          </article>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===== SOBRE NÓS ===== -->
+<section id="sobre">
+  <div class="sobre-box">
+    <h2 class="sec-titulo sobre-nos-titulo">
+  <span class="sobre-preto">Sobre</span> <span class="sobre-azul">Nós</span>
+</h2>
+    <div class="sobre-intro">
+      <p><strong>Bem-vindo à RIAtivo!</strong> Somos três jovens empreendedores apaixonados pelo desporto e pela cidade de Aveiro. Criámos esta empresa com o objetivo de dinamizar a prática desportiva através da organização de eventos inovadores, acessíveis e memoráveis.</p>
+      <p>Aliamos energia, criatividade e dedicação para proporcionar experiências únicas que promovem o bem-estar, a competição saudável e a ligação à comunidade.</p>
+    </div>
+    <div class="sobre-grid">
+      <div class="sobre-card">
+        <i class="bi bi-journal-text icon"></i>
+        <h3>Missão</h3>
+        <p>Organizar eventos desportivos que promovam a inclusão, a sustentabilidade e a excelência.</p>
+      </div>
+      <div class="sobre-card">
+        <i class="bi bi-globe-europe-africa icon"></i>
+        <h3>Visão</h3>
+        <p>Ser referência nacional pela inovação, impacto social e ligação ao território.</p>
+      </div>
+      <div class="sobre-card">
+        <i class="bi bi-trophy icon"></i>
+        <h3>Valores</h3>
+        <p>Criatividade, dedicação, espírito de equipa e paixão pelo desporto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <!-- Branding -->
+      <div class="footer-col">
+        <h2><img src="images/logotipo.png" alt="logo" class="logo-icon"></h2>
+        <p>Empresa de Eventos Desportivos!</p>
+      </div>
+
+      <!-- Office -->
+      <div class="footer-col">
+        <h3>Office<div class="underline"><span></span></div></h3>
+        <p>
+          Universidade de Aveiro<br>
+          Campus Universitário de Santiago<br>
+          3810-193 Aveiro, Portugal
+        </p>
+        <p><a href="mailto:riativo@outlook.com">riatico@outlook.com</a></p>
+        <p>+351- 912345678</p>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-col">
+        <h3>Links<div class="underline"><span></span></div></h3>
+        <ul>
+          <li><a href="front_page.html">Home</a></li>
+          <li><a href="front_page.html#servicos">Serviços</a></li>
+          <li><a href="empresa.html">Sobre Nós</a></li>
+          <li><a href="utilizador.html">Conta</a></li>
+          <li><a href="front_page.html#booking-form">Contactos</a></li>
+        </ul>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-col">
+        <h3>Newsletter<div class="underline"><span></span></div></h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email id" required>
+          <button type="submit"><i class="bi bi-arrow-right"></i></button>
+        </form>
+        <div class="social-icons">
+          <a href="#"><i class="bi bi-facebook"></i></a>
+          <a href="#"><i class="bi bi-twitter"></i></a>
+          <a href="#"><i class="bi bi-whatsapp"></i></a>
+          <a href="#"><i class="bi bi-pinterest"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+  <!-- ===== JS ===== -->
+  <script>
+    const items = document.querySelectorAll('.timeline li');
+let idx = 0;
+let auto = true;
+let timer;
+
+/* === Auto-play === */
+function cycle() {
+  if (!auto) return;
+  items.forEach(li => li.classList.remove('show'));
+  items[idx].classList.add('show');
+  idx = (idx + 1) % items.length;
+  timer = setTimeout(cycle, 4000);
+}
+
+/* === Gestos manuais === */
+items.forEach((li, i) => {
+  /* press-and-hold */
+  const startHold = () => {
+    clearTimeout(timer);
+    auto = false;
+    items.forEach(el => el.classList.remove('show','hold'));
+    li.classList.add('hold');      // só ‘hold’ fica branco
+  };
+  const endHold = () => {
+    li.classList.remove('hold');
+    auto = true;
+    timer = setTimeout(cycle, 4000);
+  };
+  li.addEventListener('mousedown', startHold);
+  li.addEventListener('touchstart', startHold, {passive:true});
+  li.addEventListener('mouseup',   endHold);
+  li.addEventListener('mouseleave',endHold);
+  li.addEventListener('touchend',  endHold);
+
+  /* clique simples -- mostra cartão mas mantém estilo normal */
+  li.addEventListener('click', () => {
+    items.forEach(el => el.classList.remove('show','hold'));
+    li.classList.add('show');
+    idx = (i + 1) % items.length;
+    auto = true;
+    clearTimeout(timer);
+    timer = setTimeout(cycle, 4000);
+  });
+});
+
+/* arranca a sequência inicial */
+setTimeout(cycle, 4000);
+
+
+// O resto do código (autoShowCards, etc.) mantém-se igual
+
+
+    /* fade-in “Sobre Nós” (opcional) */
+    const sobreIntro = document.querySelector('.sobre-intro');
+    const introObserver = new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting){
+          entry.target.style.animation='fadeInUp 1.5s ease-out both';
+          introObserver.unobserve(entry.target);
+        }
+      });
+    },{threshold:.3});
+    introObserver.observe(sobreIntro);
+
+    const sobreBox = document.querySelector('.sobre-box');
+const boxObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('animated');
+      boxObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.3 });
+boxObserver.observe(sobreBox);
+  </script>
+</body>
+</html>

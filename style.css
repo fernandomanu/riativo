@@ -1,0 +1,666 @@
+/* Reset básico e fontes */
+
+html, body {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: #000;
+  color: #fff;
+  font-size: 12px;
+}
+
+/* Header fixo */
+header {
+  width: 100%;
+  max-width: 1140px;
+  margin: auto;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+}
+
+nav a {
+  margin-right: 20px;
+}
+
+/* Carousel completo */
+.carousel {
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+  height: 650px;
+  overflow: hidden;
+  position: relative;
+  margin-top: -50px;
+}
+
+/* Lista de itens (slides grandes) */
+.carousel .list {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.carousel .list .item {
+  position: relative;
+  inset: 0;
+  z-index: 0;
+  transition: 0.5s;
+  box-shadow: inset -300px 0px 200px rgba(0, 0, 0, 0.7); /* sombra interna à esquerda */
+}
+
+.carousel .list .item img {
+  width: 100%;
+  height: 100%;
+  max-height: none; /* Limita a altura máxima da imagem */;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  border: none;
+  margin: 0;
+  filter: brightness(70%); /* Escurece a imagem para dar mais destaque ao título */
+}
+
+/* Sobreposição escura na imagem para destacar o título */
+.carousel .list .item .content {
+  position: absolute;
+  top: 20%;
+  left: 5%;
+  width: 50%;
+  padding: 20px;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 0 5px 10px #000;
+  background:none; /* Sobreposição escura */
+}
+
+.carousel .list .item .content .author {
+  font-weight: 300;
+  margin-bottom: 10px;
+}
+
+.carousel .list .item .content .title {
+  font-size: 5.5em; /* Maior para mais destaque */
+  font-weight: 900; /* Título em negrito forte */
+  line-height: 1.3em;
+  text-align: left;
+  color: #45b3e7; /* Laranja, igual ao exemplo */
+  margin-bottom: 10px;
+}
+
+.carousel .list .item .content .topic {
+  color: #45b3e7;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.carousel .list .item .content .des {
+  margin: 20px 0;
+}
+
+.carousel .list .item .content .buttons {
+  display: grid;
+  grid-template-columns: repeat(2, 130px);
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.carousel .list .item .content .buttons button {
+  height: 40px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.carousel .list .item .content .buttons button:nth-child(1) {
+  background-color: #fff;
+  color: #000;
+}
+
+.carousel .list .item .content .buttons button:nth-child(2) {
+  background-color: transparent;
+  border: 1px solid #fff;
+  color: #fff;
+}
+
+/* Miniaturas alinhadas em linha, mais distantes da imagem */
+.carousel .thumbnail {
+  position: absolute;
+  bottom: 40px; /* Mais próximo da base */
+  display: flex;
+  gap: 20px; /* Maior espaçamento entre miniaturas */
+  z-index: 10;
+}
+
+.carousel .thumbnail .item {
+  width: 120px;
+  height: 180px;
+  flex-shrink: 0;
+  position: relative;
+  border: 2px solid transparent;
+  transition: 0.3s;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.carousel .thumbnail .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+.carousel .thumbnail .item .content {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.thumbnails .item.active {
+  transform: scale(1.08);
+  box-shadow: 0 4px 18px #0008;
+}
+.thumbnails .item img {
+  border: 3px solid transparent;
+  border-radius: 16px;
+  transition: border 0.2s, transform .25s, box-shadow .25s;
+}
+
+.thumbnails .item.active img {
+  border: 3px solid #45b3e7;
+  transform: scale(1.08);
+  box-shadow: 0 4px 18px #0008;
+}
+.thumbnails .item .content,
+.thumbnails .item .content .title {
+  color: #fff !important;
+}
+
+/* Botões de navegação mais próximos das miniaturas */
+.carousel .arrows {
+  position: absolute;
+  bottom: 40px; /* Alinhado com a parte inferior das miniaturas */
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 15;
+}
+
+.carousel .arrows button {
+  width: 50px;
+  height: 50px;
+  font-size: 2em;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.carousel .arrows button:hover {
+  background-color: white;
+  color: black;
+}
+
+.carousel .time {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 5px;
+  background-color: #45b3e7;
+  width: 0;
+  animation: timeBar 7s linear infinite;
+}
+/* contêiner geral mantém-se igual */
+.thumb-zone{
+  position:absolute;
+  right:40px;
+  bottom:40px;
+  display:flex;
+  gap:16px;
+  align-items:center;
+}
+
+/* thumbnails idem */
+.thumbnails{display:flex;gap:16px;}
+.thumbnails img{width:120px;height:180px;border-radius:16px;object-fit:cover;}
+
+/* ——— SETAS ——— */
+.nav-btn {
+  position:absolute;          /* não empurra nada */
+  left:-64px;                 /* agora à ESQUERDA do bloco de miniaturas */
+  top:50%;
+  transform:translateY(-50%);
+  width:48px;height:48px;border-radius:50%;
+  background:#45b3e7;
+  color:#fff;border:none;font-size:1.6rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;box-shadow:0 2px 8px #0005;
+  transition:background .25s,transform .25s;
+  z-index: 20;
+}
+#next{left:-116px;}           /* 48 px botão + 12 px gap + 48 px outro botão */
+
+.nav-btn:hover{
+  background:#45b3e7;
+  transform:translateY(-50%) scale(1.12);
+}
+/* miniatura activa */
+.item.active img{
+  transform:scale(1.08);
+  box-shadow:0 4px 18px #0008;
+}
+
+/* transição suave */
+.thumbnails img{transition:transform .25s, box-shadow .25s;}
+
+
+/* Novo estilo para o texto do slide */
+.slide-text {
+  position: absolute;
+  top: 380px;
+  left: 60px;
+  color: #fff;
+  text-shadow: 2px 2px 12px #000a;
+  background: none;
+  padding: 0;
+  border: none;
+  z-index: 2;
+  max-width: 50vw;
+}
+
+.slide-text h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+  letter-spacing: 2px;
+  line-height: 1.1;
+}
+
+.slide-text h3 {
+  font-size: 1.2rem;
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.95;
+}
+.shadow-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background: radial-gradient(
+    ellipse at 0% 100%,
+    rgba(69,179,231,0.75) 0%,      /* mais intenso */
+    rgba(69,179,231,0.45) 30%,
+    rgba(69,179,231,0.22) 60%,
+    transparent 100%
+  );
+}
+
+
+@keyframes timeBar {
+  from {
+    width: 100%;
+  }
+  to {
+    width: 0%;
+  }
+}
+
+
+/* Títulos de seção */
+section h2 {
+  text-align:center;
+  font-size:2.5rem;
+  margin:60px 0 30px;
+  color: var(--blue);
+}
+
+/* Futuros Eventos */
+.events .cards {
+  display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:0 20px; align-items: stretch ;
+}
+.events .card {
+  background:#111; padding:20px; width:260px; border-radius:8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);  min-height: 200px;      /* força altura mínima igual */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.events .card h3 { font-size:1.2rem; margin-bottom:10px; color:#fff; }
+.events .card p { font-size:0.9rem; color:#fff; }
+
+
+/* Formulário de Reserva */
+.booking {
+  background:#111; padding:40px 20px; margin-top:60px;
+}
+.booking h2 {
+  color: #45b3e7;
+}
+.booking form {
+  max-width:600px; margin:0 auto; display:grid; gap:20px;
+}
+.booking .field {
+  display:flex; flex-direction:column;
+}
+.booking label {
+  margin-bottom:5px; font-weight:500; color:#fff;
+}
+.booking input,
+.booking select {
+  padding:10px; border:1px solid #45b3e7; border-radius:12px; background:#000; color:#fff;
+}
+.booking .btn-primary {
+  background: linear-gradient(90deg, #45b3e7, #3399ff);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.7rem 1.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+.booking .btn-primary:hover {
+  background: linear-gradient(90deg, #3399ff, #45b3e7);
+}
+
+/* Espaçamento final */
+.booking { margin-bottom:60px; }
+
+
+.countdown-section {
+  text-align: center;
+  margin-top: 40px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.countdown-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
+.time-segment {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.flip-card {
+  background: #202020;
+  color: #fff;
+  font-size: 2rem;
+  width: 60px;
+  height: 80px;
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  perspective: 1000px;
+}
+
+.flip-card .top, .flip-card .bottom {
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 100%;
+  backface-visibility: hidden;
+  font-weight: 600;
+}
+
+.flip-card .top {
+  top: 0;
+  background: #333;
+  border-bottom: 1px solid #444;
+  z-index: 2;
+}
+
+.flip-card .bottom {
+  bottom: 0;
+  background: #444;
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.label {
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #202020;
+}
+.flip-card.animate .top {
+  animation: flipTop 0.5s ease-in;
+}
+.flip-card.animate .bottom {
+  animation: flipBottom 0.5s ease-in;
+}
+
+@keyframes flipTop {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+@keyframes flipBottom {
+  0% { transform: rotateX(180deg); }
+  100% { transform: rotateX(0deg); }
+}
+/* Responsividade para o carrossel e conteúdo principal */
+@media (max-width: 900px) {
+  .carousel {
+    height: 340px;
+    margin-top: 0;
+  }
+  .carousel .list .item img {
+    height: 100%;
+    min-height: 220px;
+    max-height: 340px;
+  }
+  .slide-text {
+    top: 40px;
+    left: 16px;
+    max-width: 80vw;
+  }
+  .slide-text h1 {
+    font-size: 2rem;
+  }
+  .slide-text h3 {
+    font-size: 1.1rem;
+  }
+  .carousel .thumbnail,
+  .carousel .arrows,
+  .thumb-zone,
+  .thumbnail-row {
+    display: none !important;
+  }
+}
+
+
+@media (max-width: 600px) {
+    body, .carousel, .slide-text {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .carousel {
+    height: clamp(220px, 60vw, 340px);
+    margin-top: 0; /* anula o -50 px se ainda existir */
+  }
+
+  /* imagem sempre em *cover*, logo corta o excesso */
+  .carousel .list .item img {
+    height: 100%;
+    min-height: unset; /* soltamos limites anteriores */
+    max-height: unset;
+    object-fit: cover;
+  }
+  .carousel .slide-text {
+    top: 30vw !important;
+    left: 5vw !important;
+    max-width: 90vw;
+    padding: 0 2vw;
+  }
+  .carousel .item img {
+    height: 100%;
+    object-fit: cover;
+  }
+ .events .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 0 4px;
+    display: flex;
+  }
+  .slide-text {
+    top: 70vw;
+    left: 5vw;
+    max-width: 90vw;
+    padding: 0 2vw;
+  }
+  .slide-text h1 {
+    font-size: 1.1rem;
+    line-height: 1.2;
+  }
+  .slide-text h3 {
+    font-size: 0.9rem;
+  }
+  /* esconder setas – swipe é suficiente */
+  .arrows { display: none; }
+  .services .services-list {
+    flex-direction: column;
+    gap: 12px;
+    padding: 0 4px;
+    display: flex;
+  }
+  .booking {
+    padding: 20px 4px;
+  }
+  section h2 {
+    font-size: 1.3rem;
+    margin: 30px 0 16px;
+  }
+  .countdown-container {
+    flex-direction: row;   /* <-- horizontal */
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .flip-card {
+    width: 38px;
+    height: 48px;
+    font-size: 1rem;
+  }
+  .carousel .thumbnail,
+  .thumbnail-row { display: none !important; }
+}
+
+
+@media (max-width: 480px) {
+  .carousel .item { box-shadow: none; }
+  .slide-text {                     /* caixa de texto */
+    top: 12px;
+    left: 8px;
+    max-width: 82vw;               /* evita quebrar linha no meio */
+  }
+  .slide-text h1 { font-size: 1.4rem; line-height: 1.15; }
+}
+.theme-text {
+  color: #45b3e7;
+}
+
+
+.card {
+  z-index: 1;
+  overflow: hidden;
+  transition: 0.5s;
+  position: relative;
+  background: #111;
+  color: #45b3e7;
+}
+.card:hover {
+  color: #fff;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  left: -100%;
+  top: 0;
+  background: #45b3e7;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s;
+  z-index: -1;
+}
+.card:hover::before {
+  left: 0;
+}
+.container-fluid {
+  background-position: center;
+  background-size: cover;
+  font-family: 'Poppins',Arial, sans-serif;
+}
+
+
+/* Garante que todos os cards dos serviços têm o mesmo tamanho */
+.services .card {
+  flex: 1 1 100%;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  height: 100%;
+}
+
+.services .card-img-top {
+  height: 200px;
+  width: 100%;
+  object-fit: cover;
+  padding: 0;
+}
+
+.services .card-body {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.services .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.services .col-12,
+.services .col-sm-6,
+.services .col-md-3 {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.services .card-body h4,
+.services .card-body p {
+  margin-bottom: 0;
+}
